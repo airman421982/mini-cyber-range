@@ -25,7 +25,24 @@ st.write(df.columns.tolist())
 
 # Show the full DataFrame for inspection
 st.write("### Raw Table Output:")
-st.dataframe(df)
+import streamlit as st
+import pandas as pd
+import json
+
+st.title("🛡️ Mini Cyber Range Simulator")
+st.subheader("📊 Cleaned Log Table")
+
+# Load logs
+with open("cyber_range_logs.json") as f:
+    logs = json.load(f)
+
+df = pd.DataFrame(logs)
+
+# Display only known working columns
+if not df.empty:
+    st.dataframe(df[["timestamp", "source_ip", "destination_ip", "event_type"]])
+else:
+    st.warning("Log file is empty or formatted incorrectly.")
 
 if not df.empty and 'source_ip' in df.columns:
     st.dataframe(df[["timestamp", "source_ip", "alert_type", "risk_score", "action"]])
