@@ -2,8 +2,19 @@ import streamlit as st
 import json
 
 # Load log data
-with open("cyber_range_logs.json", "r") as f:
+import pandas as pd
+
+st.subheader("📄 Parsed Log Table")
+
+with open("cyber_range_logs.json") as f:
     logs = json.load(f)
+
+df = pd.DataFrame(logs)
+
+if not df.empty and 'source_ip' in df.columns:
+    st.dataframe(df[["timestamp", "source_ip", "alert_type", "risk_score", "action"]])
+else:
+    st.warning("Expected fields not found. Check your log format.")
 
 st.title("🛡️ Mini Cyber Range Simulator")
 
