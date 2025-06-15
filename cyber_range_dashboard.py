@@ -25,7 +25,7 @@ st.write(df.columns.tolist())
 
 # Show the full DataFrame for inspection
 st.write("### Raw Table Output:")
-st.dataframe(df)p
+st.dataframe(df)
 
 if not df.empty and 'source_ip' in df.columns:
     st.dataframe(df[["timestamp", "source_ip", "alert_type", "risk_score", "action"]])
